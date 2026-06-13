@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CampusHire - Placement Officer Dashboard</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="ploff_db.css">
+</head>
+<body>
+
+<div class="container">
+
+    <div class="grid-overlay"></div>
+    <div class="glow glow-top"></div>
+    <div class="glow glow-bottom"></div>
+
+    <div class="dashboard-card">
+
+        <p class="eyebrow">PLACEMENT OFFICER PORTAL</p>
+
+        <h1>
+            Student <span>Applications</span>
+        </h1>
+
+        <p class="subtitle">
+            Review student profiles and update placement status.
+        </p>
+
+        <!-- View Applications Navigation Controller Trigger -->
+        <a href="Job_Listings.html">
+        <button class="application-btn" onclick="viewApplications()">
+            View Recruiter →
+        </button>
+        </a>
+
+        <div class="table-wrapper">
+
+            <table>
+
+                <thead>
+                    <tr>
+                        <th>Student Name</th>
+                        <th>Branch</th>
+                        <th>Email</th>
+                        <th>CGPA</th>
+                        <th>Resume URL</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                    <tr>
+                        <td>Rahul Sharma</td>
+                        <td>CSE</td>
+                        <td>rahul@gmail.com</td>
+                        <td>8.5</td>
+                        <td>
+                            <a href="#">View Resume</a>
+                        </td>
+
+                        <td>
+                            <select class="status-select">
+                                <option>Pending</option>
+                                <option>Shortlisted</option>
+                                <option>Accepted</option>
+                            </select>
+                        </td>
+
+                        <td>
+                            <button class="submit-btn">
+                                Submit
+                            </button>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>Priya Singh</td>
+                        <td>AIML</td>
+                        <td>priya@gmail.com</td>
+                        <td>9.1</td>
+
+                        <td>
+                            <a href="#">View Resume</a>
+                        </td>
+
+                        <td>
+                            <select class="status-select">
+                                <option>Pending</option>
+                                <option>Shortlisted</option>
+                                <option>Accepted</option>
+                            </select>
+                        </td>
+
+                        <td>
+                            <button class="submit-btn">
+                                Submit
+                            </button>
+                        </td>
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- External Asset Script Integration -->
+<script src="ploff_js.js"></script>
+
+<!-- Embedded Local Controller Logics -->
+<script>
+    function viewApplications() {
+        // Core application routine can go here (e.g., pulling live records or page updates)
+        console.log("View Applications execution routine triggered.");
+    }
+</script>
+
+</body>
+</html>
