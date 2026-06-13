@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CampusHire - Student Profile</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="St_db.css">
+</head>
+<body>
+
+<div class="dashboard-container">
+
+    <div class="grid-overlay"></div>
+    <div class="glow glow-top"></div>
+    <div class="glow glow-bottom"></div>
+
+    <a href="Student_Applications.html">
+    <button class="application-btn" onclick="viewApplications()">
+        View Applications →
+    </button>
+    </a>
+
+    <div class="profile-card">
+
+        <div class="card-header">
+            <p class="eyebrow">STUDENT PORTAL</p>
+            <h1>Complete Your <span>Profile</span></h1>
+            <p class="subtitle">
+                Fill your academic details and upload your resume to become visible to recruiters.
+            </p>
+        </div>
+
+        <form id="studentForm">
+
+            <div class="form-group">
+                <label>Select Branch</label>
+                <select id="branch" class="form-input">
+                    <option value="">Choose Branch</option>
+                    <option>CSE</option>
+                    <option>AIML</option>
+                    <option>CSDS</option>
+                    <option>CSBS</option>
+                    <option>EEE</option>
+                    <option>ECE</option>
+                    <option>MECH</option>
+                    <option>CIVIL</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>Current CGPA</label>
+                <input type="number"
+                       step="0.01"
+                       min="0"
+                       max="10"
+                       id="cgpa"
+                       class="form-input"
+                       placeholder="Enter your CGPA">
+            </div>
+
+            <div class="form-group">
+                <label>Upload Resume / CV</label>
+
+                <input type="file"
+                       id="resume"
+                       accept=".pdf,.doc,.docx"
+                       hidden>
+
+                <label for="resume" class="upload-box" id="uploadBox">
+
+                    <div class="upload-icon">📄</div>
+
+                    <div class="upload-content">
+                        <span id="fileName">
+                            Click to Upload Resume
+                        </span>
+
+                        <small>
+                            PDF, DOC, DOCX • Maximum 5 MB
+                        </small>
+                    </div>
+
+                </label>
+            </div>
+
+            <button type="submit" class="submit-btn">
+                Submit Profile →
+            </button>
+
+        </form>
+
+    </div>
+
+</div>
+
+<script src="St_js.js"></script>
+
+<script>
+    function viewApplications() {
+        // Redirection or logic routine for the student applications track
+        window.location.href = "Student_Applications.html";
+    }
+</script>
+</body>
+</html>
