@@ -24,7 +24,7 @@ const ROLE_CONFIG = {
     registerHeading: 'Join as Recruiter',
     registerSub:  'Register to start finding and hiring student talent.',
     registerBtnText: 'Register as Recruiter',
-    loginOnly:    false,
+    loginOnly:    true,
   },
   student: {
     color:        'var(--student)',

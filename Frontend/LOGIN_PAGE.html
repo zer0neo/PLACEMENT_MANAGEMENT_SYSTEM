@@ -319,10 +319,24 @@
       
       document.getElementById('role-name-display').innerText = displayNames[selectedRole];
       
-      // Special view restrictions for Placement Officers (No registration)
-      if (selectedRole === 'officer') {
+      // Special view restrictions for Placement Officers & Recruiters (No registration)
+      if (selectedRole === 'officer' || selectedRole === 'recruiter') {
         document.getElementById('mode-toggle').style.display = 'none';
         document.getElementById('officer-notice').style.display = 'flex';
+        
+        const message = selectedRole === 'officer' 
+            ? 'Placement Officer accounts are provisioned by the institution admin. Please contact your administrator for access credentials.'
+            : 'Recruiter accounts are provisioned by the institution admin. Please contact your administrator for access credentials.';
+            
+        document.getElementById('officer-notice').innerHTML = `
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
+               stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <circle cx="12" cy="12" r="10"/>
+            <line x1="12" y1="8"  x2="12"    y2="12"/>
+            <line x1="12" y1="16" x2="12.01" y2="16"/>
+          </svg>
+          ${message}
+        `;
         setMode('login');
       } else {
         document.getElementById('mode-toggle').style.display = 'flex';
@@ -355,26 +369,90 @@
     }
 
     // 5. Form Submission & Dynamic Hyperlink Navigation
-    function handleSubmit(actionType) {
+    async function handleSubmit(actionType) {
       if (actionType === 'login') {
-        // Form validations can happen here
+        const email = document.getElementById('login-email').value;
+        const password = document.getElementById('login-pwd-field').value;
         
-        // Execute dynamic hyperlinks depending on the active role context
+        if(!email || !password) {
+           showToast("Please enter email and password.", "#FF5E5E");
+           return;
+        }
+
+        let endpoint = "";
+        let redirectUrl = "";
         if (selectedRole === 'student') {
-          window.location.href = "Student_db.html";
+          endpoint = "/api/login/students";
+          redirectUrl = "Student_db.html";
         } else if (selectedRole === 'recruiter') {
-          window.location.href = "Recuitor_db.html";
+          endpoint = "/api/login/recruiter";
+          redirectUrl = "Recuitor_db.html";
         } else if (selectedRole === 'officer') {
-          window.location.href = "Placementoff_db.html";
+          endpoint = "/api/login/placement_officer";
+          redirectUrl = "Placementoff_db.html";
         } else {
           showToast("Please choose a valid role.", "#FF5E5E");
+          return;
+        }
+
+        try {
+          const res = await fetch(`http://localhost:5000${endpoint}`, {
+             method: 'POST',
+             headers: { 'Content-Type': 'application/json' },
+             body: JSON.stringify({ email, password })
+          });
+          const data = await res.json();
+          if (res.ok) {
+             showToast("Login successful! Redirecting...", "#36CFAD");
+             setTimeout(() => { window.location.href = redirectUrl; }, 1200);
+          } else {
+             showToast(data.message || "Login failed", "#FF5E5E");
+          }
+        } catch (err) {
+           showToast("Error connecting to server", "#FF5E5E");
         }
       } else if (actionType === 'register') {
-        showToast("Registration successful! Redirecting...", "#36CFAD");
-        setTimeout(() => {
-          if (selectedRole === 'student') window.location.href = "Student_db.html";
-          if (selectedRole === 'recruiter') window.location.href = "Recuitor_db.html";
-        }, 1200);
+        const name = document.getElementById('reg-fullname').value;
+        const email = document.getElementById('reg-email').value;
+        const password = document.getElementById('reg-pwd').value;
+        
+        if(!name || !email || !password) {
+           showToast("Please fill all fields.", "#FF5E5E");
+           return;
+        }
+
+        let endpoint = "";
+        let redirectUrl = "";
+        if (selectedRole === 'student') {
+          endpoint = "/api/register/students";
+          redirectUrl = "Student_db.html";
+        } else if (selectedRole === 'recruiter') {
+          endpoint = "/api/register/recruiter";
+          redirectUrl = "Recuitor_db.html";
+        } else if (selectedRole === 'officer') {
+          endpoint = "/api/register/placement_officer";
+          redirectUrl = "Placementoff_db.html";
+        } else {
+          showToast("Please choose a valid role.", "#FF5E5E");
+          return;
+        }
+
+        try {
+          const res = await fetch(`http://localhost:5000${endpoint}`, {
+             method: 'POST',
+             headers: { 'Content-Type': 'application/json' },
+             body: JSON.stringify({ name, email, password })
+          });
+          const data = await res.json();
+          if (res.ok) {
+             showToast("Registration successful! Redirecting...", "#36CFAD");
+             setTimeout(() => { window.location.href = redirectUrl; }, 1200);
+          } else {
+             showToast(data.message || "Registration failed", "#FF5E5E");
+          }
+        } catch (err) {
+           showToast("Error connecting to server", "#FF5E5E");
+        }
       }
     }
 

@@ -20,14 +20,19 @@ const selectStudent = (req, res) => {
     }
 
     const { application_id } = req.params;
+    const { status } = req.body;
+
+    if (!['selected', 'rejected'].includes(status)) {
+        return res.status(400).json({ message: "Invalid status" });
+    }
 
     const query = `
         UPDATE applications
-        SET status = 'selected'
+        SET status = ?
         WHERE application_id = ?
     `;
 
-    db.query(query, [application_id], (err, result) => {
+    db.query(query, [status, application_id], (err, result) => {
 
         if (err) {
             return res.status(500).json(err);
@@ -40,7 +45,7 @@ const selectStudent = (req, res) => {
         }
 
         return res.status(200).json({
-            message: "Student selected successfully"
+            message: `Student ${status} successfully`
         });
     });
 };

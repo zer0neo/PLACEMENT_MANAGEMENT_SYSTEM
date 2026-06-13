@@ -14,7 +14,7 @@ resumeInput.addEventListener("change", () => {
 // ==========================================
 // FORM VALIDATION & SUBMISSION LOGIC
 // ==========================================
-document.getElementById("studentForm").addEventListener("submit", function(e) {
+document.getElementById("studentForm").addEventListener("submit", async function(e) {
     e.preventDefault();
 
     const branch = document.getElementById("branch").value;
@@ -35,7 +35,28 @@ document.getElementById("studentForm").addEventListener("submit", function(e) {
         return;
     }
 
-    alert("Profile submitted successfully!");
+    const formData = new FormData();
+    formData.append("branch", branch);
+    formData.append("cgpa", cgpa);
+    formData.append("resume_url", resumeInput.files[0]);
+
+    try {
+        const res = await fetch("http://localhost:5000/api/students/resume", {
+            method: "POST",
+            body: formData,
+            credentials: "include"
+        });
+        
+        if (res.ok) {
+            alert("Profile submitted successfully!");
+            window.location.href = "Student_Applications.html";
+        } else {
+            const data = await res.json();
+            alert(data.message || "Submission failed");
+        }
+    } catch (err) {
+        alert("Error connecting to server");
+    }
 });
 
 // ==========================================
